@@ -12,27 +12,31 @@ client = []
 
 #Default Connection Callback function
 def on_connect(client, userdata, flags, rc):
-    print("Connected with result code "+str(rc))
+    print("[INFO] Connected with result code "+str(rc))
     client.subscribe(MQTT_PATH)
 
 #Default Connection Callback function after recieving message from server
 def on_message(client, userdata, msg):
     #print("Num:",i)
-    print(msg.topic+" "+str(msg.payload))
+    print("[DATA] " + msg.topic+" "+str(msg.payload))
 
 # Send data contineously to MQTT Server
 def send_data(client):
-
-	while (1):
-		temp = random.randint(20, 30)
-		humidity = random.randint(10, 15)
-		client.publish("house/temp",str(temp))
-		client.publish("house/humidity",str(humidity))
-		time.sleep(2)
+	print("[INFO] Press CRTL+C to stop the script...")
+	try:
+		while (1):
+			temp = random.randint(20, 30)
+			humidity = random.randint(10, 15)
+			client.publish("house/temp",str(temp))
+			client.publish("house/humidity",str(humidity))
+			time.sleep(2)
+	except KeyboardInterrupt:
+		print("[INFO] Dummy Sender Stopped..")
+		#pass
 
 # Main Function
 if __name__ == "__main__":
-	print("Dummy Sender Init..")
+	print("[INFO] Dummy Sender Init..")
 	client = paho.Client()
 	client.on_connect = on_connect
 	client.on_message = on_message
@@ -41,4 +45,4 @@ if __name__ == "__main__":
 	client.loop_start()
 	send_data(client)
 	client.loop_stop() #stop the loop
-	print("END")
+	print("[INFO] END")
