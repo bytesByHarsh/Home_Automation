@@ -1,3 +1,44 @@
 # Include Library
 import paho.mqtt.client as paho  
 import time
+import random
+
+#MQTT Connection Information
+MQTT_SERVER = "localhost"
+MQTT_PATH = "#"
+port=1883
+client = []
+
+
+#Default Connection Callback function
+def on_connect(client, userdata, flags, rc):
+    print("Connected with result code "+str(rc))
+    client.subscribe(MQTT_PATH)
+
+#Default Connection Callback function after recieving message from server
+def on_message(client, userdata, msg):
+    #print("Num:",i)
+    print(msg.topic+" "+str(msg.payload))
+
+# Send data contineously to MQTT Server
+def send_data(client):
+
+	while (1):
+		temp = random.randint(20, 30)
+		humidity = random.randint(10, 15)
+		client.publish("house/temp",str(temp))
+		client.publish("house/humidity",str(humidity))
+		time.sleep(2)
+
+# Main Function
+if __name__ == "__main__":
+	print("Dummy Sender Init..")
+	client = paho.Client()
+	client.on_connect = on_connect
+	client.on_message = on_message
+	client.connect(MQTT_SERVER, port, 60)
+	#client.loop_forever()	# Will loop forever
+	client.loop_start()
+	send_data(client)
+	client.loop_stop() #stop the loop
+	print("END")
