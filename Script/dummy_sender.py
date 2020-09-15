@@ -30,7 +30,7 @@ def send_data(client):
 			client.publish("house/temp",str(temp))
 			client.publish("house/humidity",str(humidity))
 			# To publish using JSON packet
-			client.publish("house",str(json.dumps({"temp":str(temp),"humidity":str(humidity)}))) 
+			#client.publish("house",str(json.dumps({"temp":str(temp),"humidity":str(humidity)}))) 
 			time.sleep(2)
 	except KeyboardInterrupt:
 		print("[INFO] Dummy Sender Stopped..")
