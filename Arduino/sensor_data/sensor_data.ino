@@ -43,10 +43,12 @@ void reconnect(){
 void setup() {
   
   Serial.begin(9600);
-  Serial.println("Booting Up the NodeMCU1...");
+  Serial.println("Booting Up the NodeMCU...");
   client.setServer(mqtt_server, 1883); // MQTT Server port
 
-  client.setCallback(callback);
+  client.setCallback(callback); // Calback function for MQTT Messages
+
+  dht.begin();
 
 }
 
@@ -79,7 +81,7 @@ void getAndSendSensorData(){
   Serial.print("Humidity: ");
   Serial.print(h);
   Serial.print(" %\t");
-  Serial.print("Temperature: ");
+  Serial.print(" %\t Temperature: ");
   Serial.print(t);
   Serial.print(" *C ");
 
@@ -89,14 +91,19 @@ void getAndSendSensorData(){
 
   // Prepare a JSON payload string
   String payload = "{";
-  payload += "\"temperature\":"; payload += temperature; payload += ",";
+  payload += "\"temp\":"; payload += temperature; payload += ",";
   payload += "\"humidity\":"; payload += humidity;
   payload += "}";
 
   // Send payload
   char attributes[100];
+  char temp[10],hum[10];
   payload.toCharArray( attributes, 100 );
+  temperature.toCharArray(temp,10);
+  humidity.toCharArray(hum,10);
   client.publish( "house", attributes );
+  client.publish( "house/temp", temp );
+  client.publish( "house/humidity", hum );
   Serial.println( attributes );
 }
 
