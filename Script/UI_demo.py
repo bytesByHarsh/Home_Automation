@@ -67,9 +67,12 @@ class Ui_MainWindow(object):
         self.menubar.addAction(self.menuAbout.menuAction())
 
         self.retranslateUi(MainWindow)
+        # Added using Signal and Slot
         self.pushButton.clicked.connect(MainWindow.close)
         self.ACTemp.valueChanged['int'].connect(self.ACTemplcd.display)
-        self.ACTemplcd.display("15")
+
+        
+        self.ACTemplcd.display("15") # Display default Temp on LCD
         self.ACTemp.valueChanged['int'].connect(self.AC_Temp_changed)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
