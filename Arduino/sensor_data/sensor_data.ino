@@ -78,12 +78,7 @@ void getAndSendSensorData(){
     return;
   }
 
-  Serial.print("Humidity: ");
-  Serial.print(h);
-  Serial.print(" %\t");
-  Serial.print(" %\t Temperature: ");
-  Serial.print(t);
-  Serial.print(" *C ");
+  printSensorData(h,t);
 
   String temperature = String(t);
   String humidity = String(h);
@@ -112,4 +107,13 @@ void callback(char* topic, byte* payload, unsigned int length){
   Serial.print("Message arrived [");
   Serial.print(topic);
   Serial.print("] ");
+}
+
+void printSensorData(float h,float t){
+  Serial.print("Humidity: ");
+  Serial.print(h);
+  Serial.print(" %\t");
+  Serial.print(" %\t Temperature: ");
+  Serial.print(t);
+  Serial.print(" *C ");
 }
