@@ -21,6 +21,13 @@ PyQt is a Python binding of the cross-platform GUI toolkit Qt, implemented as a 
 
 Please refer to README in each folder.
 
+[Arduino](Arduino/README.md)
+
+[Qt](Qt/README.md)
+
+[Python](Script/README.md)
+
+
 To run the project directly:
 
 Terminal 1:
