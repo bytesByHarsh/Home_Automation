@@ -41,3 +41,7 @@ Terminal 2:
 $cd Script/
 $python ./UI_Demo
 ```
+
+GUI:
+
+![GUI](img/GUI.JPG)
